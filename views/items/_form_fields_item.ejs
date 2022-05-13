@@ -1,0 +1,25 @@
+<div>
+    <label>Name</label>
+    <input type="text" name="name" value="<%= item.name %>">
+</div>
+<div>
+    <label>Quantity</label>
+    <input type="number" name="quantity" min="1" value="<%= item.quantity %>">
+</div>
+<div>
+    <label>Warehouse</label>
+    <select name="warehouse">
+        <% warehouses.forEach(warehouse => { %>
+            <% if(warehouse.id === item.warehouse) { %> 
+            <option selected label="<%= warehouse.name %>" value="<%= warehouse.id %>"></option>
+            <% } else { %> 
+            <option label="<%= warehouse.name %>" value="<%= warehouse.id %>"></option>
+            <% } %> 
+        <% }) %> 
+    </select>
+</div>
+<div>
+    <label>Image</label>
+    <input type="file" name="imageName">
+</div>
+

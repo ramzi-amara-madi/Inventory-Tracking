@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 
 const indexRouter = require("./routes/index");
 const warehouseRouter = require("./routes/warehouses");
+const itemRouter = require("./routes/items");
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
@@ -27,5 +28,6 @@ mongoose.connect(process.env.DATABASE_URL, {
 
 app.use("/", indexRouter);
 app.use("/warehouses", warehouseRouter);
+app.use("/items", itemRouter);
 
 app.listen(process.env.PORT || 3000);
