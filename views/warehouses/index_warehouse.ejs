@@ -7,4 +7,11 @@
 <br>
 <% warehouses.forEach(warehouse => { %>
     <div><%= warehouse.name %></div>
+    <div>
+        <a href="/warehouses/<%= warehouse.id %>">View</a>
+        <a href="/warehouses/<%= warehouse.id %>/Edit">Edit</a>
+        <%- include("../layouts/partials/deleteForm.ejs", { 
+            url: `/warehouses/${warehouse.id}`
+         }) %> 
+    </div>
 <% }) %> 

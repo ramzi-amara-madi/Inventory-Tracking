@@ -1,0 +1,6 @@
+<h2>Edit Warehouse</h2>
+<form action="/warehouses/<%= warehouse.id %>?_method=PUT" method="POST">
+    <%- include("_form_fields_warehouse") %> 
+    <a href="/warehouses">Cancel</a>
+    <button type="submit">Update</button>
+</form>

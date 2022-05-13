@@ -1,0 +1,11 @@
+<h2><%= warehouse.name %> </h2>
+<div>
+    <a href="/warehouses/<%= warehouse.id %> /edit">Edit</a>
+    <%- include("../layouts/partials/deleteForm.ejs", { url: `/warehouses/${warehouse.id}`}) %>
+    <% if(itemRelatedToWarehouse.length > 0) { %>
+        <h2>Items in this Warehouse</h2>
+        <% itemRelatedToWarehouse.forEach(item => { %>
+            <img height="150" width="200" src="<%= item.imagePath %> ">
+        <% }) %> 
+    <% } %>  
+</div>
