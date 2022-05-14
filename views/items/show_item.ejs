@@ -1,0 +1,19 @@
+<h2><%= item.name %> </h2>
+<img src="<%= item.imagePath %>" height="150" width="200">
+<div>
+    Quantity : <%= item.quantity %> 
+</div>
+<div>
+    Warehouse : <%= item.warehouse.name %> 
+</div>
+<div>
+    Location : <%= item.warehouse.state %>, <%= item.warehouse.country %>
+</div>
+<div>
+    Adresse : <%= item.warehouse.adresse %>
+</div>
+<div>
+    <a href="/items/<%= item.id %>/edit">Edit</a>
+    <%- include("../layouts/partials/deleteForm.ejs", { url: `/items/${item.id}`}) %> 
+    <a href="/warehouses/<%= item.warehouse.id %>">View warehouse</a>
+</div>

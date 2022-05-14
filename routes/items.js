@@ -37,6 +37,28 @@ router.get("/new", async(req, res) => {
     renderNewPage(res, new Item());
 });
 
+// Get specific item with id
+router.get("/:id", async(req, res) => {
+    try {
+        const item = await Item.findById(req.params.id).populate("warehouse").exec();
+        res.render("items/show_item", { item: item });
+    } 
+    catch {
+        res.redirect("/items");
+    }
+});
+
+// Edit item route
+router.get("/:id/edit", async(req, res) => {
+    try {
+        const item = await Item.findById(req.params.id);
+        renderEditPage(res, item);
+    } 
+    catch {
+        res.redirect("/items");
+    }
+});
+
 // Create Item routes
 router.post("/", upload.single("imageName"), async(req, res) => {
     const fileName = req.file != null ? req.file.filename : null
@@ -61,14 +83,25 @@ router.post("/", upload.single("imageName"), async(req, res) => {
 
 // Methode to render to the add Item page
 async function renderNewPage(res, item, hasError = false){
+    renderFormPage(res, item, 'new_item', hasError = false)
+}
+
+// Methode to render to the edit Item page
+async function renderEditPage(res, item, hasError = false){
+    console.log(item.name);
+    renderFormPage(res, item, 'edit_item', hasError = false)
+}
+
+// Render the form page
+async function renderFormPage(res, item, form, hasError = false){
     try{
         const warehouses = await Warehouse.find({});
         const params = {
             warehouses: warehouses,
             item : item,
         }
-        if(hasError) params.errorMessage = "Error creating an Item";
-        res.render("items/new_item", params);
+        if(hasError) params.errorMessage = "Error editing an Item";
+        res.render(`items/${form}`, params);
     }catch{
         res.redirect("/items");
     }

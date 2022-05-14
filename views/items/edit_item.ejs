@@ -1,0 +1,6 @@
+<h2>Edit Item</h2>
+<form action="/items/<%= item.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <%- include("_form_fields_item") %> 
+    <a href="/items">Cancel</a>
+    <button type="submit">Update</button>
+</form>

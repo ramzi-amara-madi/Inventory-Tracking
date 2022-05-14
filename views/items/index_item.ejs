@@ -11,6 +11,6 @@
 <br>
 <div>
     <% items.forEach(item => { %>
-        <img height="150" width="200" src="<%= item.imagePath %> ">
+        <a href="/items/<%= item.id %> "><img height="150" width="200" src="<%= item.imagePath %> "></a>
     <% }) %> 
 </div>
