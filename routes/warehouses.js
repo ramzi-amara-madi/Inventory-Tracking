@@ -3,13 +3,17 @@ const router = express.Router();
 const Warehouse = require("../models/warehouse");
 const Item = require("../models/item");
 
-// New Warehouse routes
+/**
+ * Route - Render the add a new warehouse page (new_warehouse.ejs)
+ */
 router.get("/new", (req, res) => {
     //console.log("Mouk");
     res.render("warehouses/new_warehouse", { warehouse: new Warehouse() });
 });
 
-// Warehouses routes
+/**
+ * Route - Gets all the warehouses from the database and render the page with all the warehouses (index_warehouse.ejs)
+ */
 router.get("/", async(req, res) => {
     let searchOptions = {}
     if(req.query.name != null && req.query.name !== ""){
@@ -27,7 +31,9 @@ router.get("/", async(req, res) => {
     
 });
 
-// Get the warehouse by his id
+/**
+ * Route - Gets a specific warehouse with an id and render a page with all the informations of the warehouse (show_warehouse.ejs)
+ */
 router.get("/:id", async(req, res) => {
     try {
         const warehouse = await Warehouse.findById(req.params.id);
@@ -42,7 +48,9 @@ router.get("/:id", async(req, res) => {
     }
 });
 
-// Get to the edit page of a Warehouse
+/**
+ * Route - Render the edit an warehouse page (edit_warehouse.ejs) with all the information of a specific warehouse. The warehouse is find with his id.
+ */
 router.get("/:id/edit", async(req, res) => {
     try {
         const warehouse = await Warehouse.findById(req.params.id);
@@ -53,7 +61,9 @@ router.get("/:id/edit", async(req, res) => {
     }
 });
 
-// Create Warehouse routes
+/**
+ * Route - Adding a new warehouse to the database
+ */
 router.post("/", async(req, res) => {
     const warehouse = new Warehouse({
         name: req.body.name,
@@ -63,27 +73,28 @@ router.post("/", async(req, res) => {
     });
     try{
         const newWarehouse = await warehouse.save();
-        //res.redirect(`warehouses/${newWarehouse.id}`)
         res.redirect("warehouses/");
     }catch{
         res.render("warehouses/new_warehouse", { 
             warehouse: warehouse, 
-            errorMessage : `something went wrong` 
+            errorMessage : "Something went wrong with the adding"
         });
     }
 });
 
-// Edit router for Warehouse
+/**
+ * Route - Editing a specifig warehouse from the database find by his id
+ */
 router.put("/:id", async(req, res) => {
     let warehouse;
     try{
         warehouse = await Warehouse.findById(req.params.id);
         warehouse.name = req.body.name;
-        warehouse.country = req.body.country,
-        warehouse.state = req.body.state,
-        warehouse.adresse = req.body.adresse,
+        warehouse.country = req.body.country;
+        warehouse.state = req.body.state;
+        warehouse.adresse = req.body.adresse;
+
         await warehouse.save();
-        //res.redirect(`warehouses/${newWarehouse.id}`)
         res.redirect("/warehouses");
     }catch{
         if(warehouse == null){
@@ -92,19 +103,21 @@ router.put("/:id", async(req, res) => {
         else{
             res.render("warehouses/edit_warehouse", { 
                 warehouse: warehouse, 
-                errorMessage : `Error updating the warehouse` 
+                errorMessage : "Error while updating the warehouse"
             });
         }
     }
 });
 
-// Delete router for Warehouse
+/**
+ * Route - Delete a warehouse from the database find by his id
+ */
 router.delete("/:id", async(req, res) => {
     let warehouse;
     try{
         warehouse = await Warehouse.findById(req.params.id);
+        
         await warehouse.remove();
-        //res.redirect(`warehouses/${newWarehouse.id}`)
         res.redirect("/warehouses");
     }catch{
         res.redirect("/warehouses");

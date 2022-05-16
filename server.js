@@ -9,7 +9,9 @@ const expressLayouts = require("express-ejs-layouts");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 
-// Routes
+/**
+ * All the using routes
+ */
 const indexRouter = require("./routes/index");
 const warehouseRouter = require("./routes/warehouses");
 const itemRouter = require("./routes/items");
@@ -22,6 +24,9 @@ app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
+/**
+ * Setting to connect to the database
+ */
 const mongoose = require("mongoose");
 mongoose.connect(process.env.DATABASE_URL, { 
     useNewUrlParser: true
@@ -30,6 +35,9 @@ mongoose.connect(process.env.DATABASE_URL, {
  db.on("error", error => console.error(error));
  db.once("open", () => console.log("Connected to Mongoose!"));
 
+ /**
+  * Definiton of all the routes
+  */
 app.use("/", indexRouter);
 app.use("/warehouses", warehouseRouter);
 app.use("/items", itemRouter);

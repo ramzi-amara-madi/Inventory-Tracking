@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const Item = require("./item")
 
+/**
+ * Model that represente an item object
+ */
 const warehouseSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -25,6 +28,10 @@ const warehouseSchema = new mongoose.Schema({
     },
 });
 
+/**
+ * Function that check if the warehouse still have items.
+ * If yes, the warehouse can't be deleted
+ */
 warehouseSchema.pre("remove", function(next){
     Item.find({ warehouse: this.id }, (err, items) => {
         if(err){

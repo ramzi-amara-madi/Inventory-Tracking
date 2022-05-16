@@ -16,7 +16,9 @@ const upload = multer({
     }
 });
 
-// Items routes
+/**
+ * Route - Gets all the items from the database and render the page with all the items (index_item.ejs)
+ */
 router.get("/", async(req, res) => {
     let searchOptions = {}
     if(req.query.name != null && req.query.name !== ""){
@@ -33,12 +35,16 @@ router.get("/", async(req, res) => {
     }
 });
 
-// New Item routes
+/**
+ * Route - Render the add a new item page (new_item.ejs)
+ */
 router.get("/new", async(req, res) => {
     renderNewPage(res, new Item());
 });
 
-// Get specific item with id
+/**
+ * Route - Gets a specific item with an id and render a page with all the informations of the item (show_item.ejs)
+ */
 router.get("/:id", async(req, res) => {
     try {
         const item = await Item.findById(req.params.id).populate("warehouse").exec();
@@ -49,7 +55,9 @@ router.get("/:id", async(req, res) => {
     }
 });
 
-// Edit item route
+/**
+ * Route - Render the edit an item page (edit_item.ejs) with all the information of a specific item. The item is find with his id.
+ */
 router.get("/:id/edit", async(req, res) => {
     try {
         const item = await Item.findById(req.params.id);
@@ -60,7 +68,9 @@ router.get("/:id/edit", async(req, res) => {
     }
 });
 
-// Create Item routes
+/**
+ * Route - Adding a new item to the database
+ */
 router.post("/", upload.single("imageName"), async(req, res) => {
     const fileName = req.file != null ? req.file.filename : null
     const item = new Item({
@@ -81,7 +91,9 @@ router.post("/", upload.single("imageName"), async(req, res) => {
     }
 });
 
-// Edit Item routes
+/**
+ * Route - Editing a specifig item find by his id
+ */
 router.put("/:id", upload.single("imageName"), async(req, res) => {
     let item;
     try {
@@ -106,7 +118,9 @@ router.put("/:id", upload.single("imageName"), async(req, res) => {
     }
 });
 
-// Delete Item routes
+/**
+ * Route - Delete an item find by his id
+ */
 router.delete("/:id", async(req, res) => {
     let item;
     try {
@@ -128,17 +142,33 @@ router.delete("/:id", async(req, res) => {
 
 });
 
-// Methode to render to the add Item page
+/**
+ * Render the add a new item page (new_item.ejs)
+ * @param {*} res 
+ * @param {*} item 
+ * @param {*} hasError 
+ */
 async function renderNewPage(res, item, hasError = false){
     renderFormPage(res, item, 'new_item', hasError = false)
 }
 
-// Methode to render to the edit Item page
+/**
+ * Render the edit item page (edit_item)
+ * @param res 
+ * @param item 
+ * @param hasError 
+ */
 async function renderEditPage(res, item, hasError = false){
     renderFormPage(res, item, 'edit_item', hasError = false)
 }
 
-// Render the form page
+/**
+ * Render the form page (_form_fields_item.ejs)
+ * @param res 
+ * @param item 
+ * @param form 
+ * @param hasError 
+ */
 async function renderFormPage(res, item, form, hasError = false){
     try{
         const warehouses = await Warehouse.find({});
@@ -160,7 +190,10 @@ async function renderFormPage(res, item, form, hasError = false){
     }
 }
 
-// To remove an image of an item that was not correctly added
+/**
+ * Remove an image of an item that was not correctly added
+ * @param fileName 
+ */
 function removeItemImage(fileName){
     fs.unlink(path.join(uploadPath, fileName), err => {
         if(err) console.log(err);
