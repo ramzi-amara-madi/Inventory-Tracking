@@ -5,7 +5,9 @@
     <% if(itemRelatedToWarehouse.length > 0) { %>
         <h2>Items in this Warehouse</h2>
         <% itemRelatedToWarehouse.forEach(item => { %>
-            <img height="150" width="200" src="<%= item.imagePath %> ">
+            <a href="/items/<%= item.id %>"> 
+                <img height="150" width="200" src="<%= item.imagePath %> ">
+            </a>
         <% }) %> 
     <% } %>  
 </div>

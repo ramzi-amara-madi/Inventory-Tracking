@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const Item = require("../models/item");
 const uploadPath = path.join("public", Item.imageBasePath);
+// All the images types that can be uploaded
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 const Warehouse = require("../models/warehouse");
 const upload = multer({
@@ -69,8 +70,7 @@ router.post("/", upload.single("imageName"), async(req, res) => {
         imageName: fileName,
     });
     try {
-        const newItem = await item.save();
-        //res.redirect(`items/${newItem.id}`)
+        await item.save();
         res.redirect("items");
     }
     catch {
@@ -81,6 +81,53 @@ router.post("/", upload.single("imageName"), async(req, res) => {
     }
 });
 
+// Edit Item routes
+router.put("/:id", upload.single("imageName"), async(req, res) => {
+    let item;
+    try {
+        item = await Item.findById(req.params.id);
+        item.name = req.body.name;
+        item.quantity = req.body.quantity;
+        item.warehouse = req.body.warehouse;
+        if(req.file != null && req.file.filename !== ""){
+            const fileName = req.file != null ? req.file.filename : null
+            item.imageName = fileName;
+        }
+        await item.save();
+        res.redirect("items");
+    }
+    catch {
+        if(item != null){
+            renderEditPage(res, item, true);
+        }
+        else{
+            res.redirect("items");
+        }
+    }
+});
+
+// Delete Item routes
+router.delete("/:id", async(req, res) => {
+    let item;
+    try {
+        item = await Item.findById(req.params.id);
+        await item.remove();
+        res.redirect("/items");
+    } 
+    catch {
+        if(item != null){
+            res.render("items/show_item", {
+                item: item,
+                errorMessage : "Could not remove the item",
+            });
+        }
+        else{
+            res.redirect("/items");
+        }
+    }
+
+});
+
 // Methode to render to the add Item page
 async function renderNewPage(res, item, hasError = false){
     renderFormPage(res, item, 'new_item', hasError = false)
@@ -88,7 +135,6 @@ async function renderNewPage(res, item, hasError = false){
 
 // Methode to render to the edit Item page
 async function renderEditPage(res, item, hasError = false){
-    console.log(item.name);
     renderFormPage(res, item, 'edit_item', hasError = false)
 }
 
@@ -100,7 +146,14 @@ async function renderFormPage(res, item, form, hasError = false){
             warehouses: warehouses,
             item : item,
         }
-        if(hasError) params.errorMessage = "Error editing an Item";
+        if(hasError){
+            if(form === "edit_item"){
+                params.errorMessage = "Error editing an Item";
+            }
+            else if (form === "new_item"){
+                params.errorMessage = "Error creating an Item";
+            }
+        }
         res.render(`items/${form}`, params);
     }catch{
         res.redirect("/items");
