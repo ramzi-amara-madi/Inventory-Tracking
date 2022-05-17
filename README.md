@@ -14,7 +14,7 @@ This application allows you to :
 
 ## How to run the app
 1. Clone the project on your machine
-2. In the terminal, move to the project directory
+2. In the terminal, go to the project directory
 3. Run the command `docker-compose up`. The app will be served at localhost:3000
 4. Go to http://localhost:3000/ in your browser and the application should be running
 
