@@ -13,4 +13,9 @@ This application allows you to :
 1. Docker
 
 ## How to run the app
-1. Donwload my project image using `docker pull ramzi007/inventory-tracking-shopify:tagname`
+1. Clone the project on your machine
+2. In the terminal, move to the project directory
+3. Run the command `docker-compose up`
+4. The app should be running on localhost:3000
+
+
