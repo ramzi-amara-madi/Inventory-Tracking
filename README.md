@@ -9,3 +9,8 @@ This application allows you to :
   - View a list of them
   - Create warehouses and assign multiple items to it
 
+## What do you need to run the app
+1. Docker
+
+## How to run the app
+1. Donwload my project image using `docker pull ramzi007/inventory-tracking-shopify:tagname`
