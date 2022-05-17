@@ -1,5 +1,5 @@
 # Inventory-tracking
-This project is an inventory tracking web application for a logistics company. The project is already deploy to a server. You can acces with this link : https://inventory-tracking-shopify.herokuapp.com/
+This project is an inventory tracking web application for a logistics company. The project is already deploy to a server. You can acces it with this link : https://inventory-tracking-shopify.herokuapp.com/
 
 ## What does the app do
 This application allows you to :
