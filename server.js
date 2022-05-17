@@ -42,4 +42,4 @@ app.use("/", indexRouter);
 app.use("/warehouses", warehouseRouter);
 app.use("/items", itemRouter);
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 4000);
