@@ -18,6 +18,9 @@ This application allows you to :
 3. Run the command `docker-compose up`. The app will be served at localhost:3000
 4. Go to http://localhost:3000/ in your browser and the application should be running
 
+## How to run the app on replit
+1. You only have to click on the start button or run the command `npm start`
+
 ## Must know
 - An item can't be created without being associated to a warehouse. 
 - A warehouse can't be deleted if there is still items associated to it
