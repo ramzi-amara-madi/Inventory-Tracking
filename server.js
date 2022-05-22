@@ -1,7 +1,3 @@
-if(process.env.NODE_ENV !== "production"){
-    require("dotenv").config();
-}
-
 // Librairies
 const express = require("express");
 const app = express();
@@ -10,7 +6,7 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 
 /**
- * All the using routes
+ * Locations routes
  */
 const indexRouter = require("./routes/index");
 const warehouseRouter = require("./routes/warehouses");
@@ -42,4 +38,6 @@ app.use("/", indexRouter);
 app.use("/warehouses", warehouseRouter);
 app.use("/items", itemRouter);
 
+
+// Setting the local port
 app.listen(process.env.PORT || 4000);
